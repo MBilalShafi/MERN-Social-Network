@@ -10,23 +10,13 @@ var userController = require('../controller/user.controller');
 
 // get by username nd password
 
-router.get('/user', function(req, res, next){
-  User.find({
-    $or
-    {
-      username: req.query.username, password: req.query.password
-    },
-    {
-      email: req.query.email, password: req.query.password
-    }
-    }).then(function(err, user){
+router.post('/login', function(req, res, next){
+
+  User.findOne(req.body, function(err, user){
     if (err) throw err;
     console.log(user);
     res.send(user);
-  }).catch(function(){
-    console.log('promise rejected');
-    res.status(422).send("Error handling your request");
-  });
+  })
 });
 
 
