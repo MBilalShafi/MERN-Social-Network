@@ -23,6 +23,10 @@ const PostSchema = new Schema({
   tags: {
     type: [Number],
     required: [true, "At least one tag is reqd"]
+  },
+  createdTimestamp:{
+    type: Number,
+    required: [true, "A post must be published on some time"]
   }
 });
 
