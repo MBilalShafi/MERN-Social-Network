@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
+  owner: { // _id of post submittor
+    type: Number,
+    required: [true, "A post must have an owner"]
+  }
   title: {
     type: String,
     required: [true, "Title is reqd"]

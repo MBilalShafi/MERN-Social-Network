@@ -8,10 +8,18 @@ var userMiddleware = require('../middleware/user.middleware');
 //Controller
 var userController = require('../controller/user.controller');
 
-// get by ID
-/*
-router.get('/users', function(req, res, next){
-  User.findById({_id: req.query.id}).then(function(err, user){
+// get by username nd password
+
+router.get('/user', function(req, res, next){
+  User.find({
+    $or
+    {
+      username: req.query.username, password: req.query.password
+    },
+    {
+      email: req.query.email, password: req.query.password
+    }
+    }).then(function(err, user){
     if (err) throw err;
     console.log(user);
     res.send(user);
@@ -20,7 +28,7 @@ router.get('/users', function(req, res, next){
     res.status(422).send("Error handling your request");
   });
 });
-*/
+
 
 // get all
 

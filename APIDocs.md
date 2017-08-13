@@ -5,6 +5,9 @@ Available Routes:
 
 User:
 
+/user [GET]
+Will return a user (you will send email and password or username and password in arguments)
+
 /users [GET]
 Will return all users in JSON Array
 
