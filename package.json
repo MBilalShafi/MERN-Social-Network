@@ -4,7 +4,7 @@
   "description": "Social Sharing App in MERN Stack.",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js"
+    "start": "node app"
   },
   "keywords": [
     "node",
