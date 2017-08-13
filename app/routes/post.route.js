@@ -72,7 +72,13 @@ router.post('/users', function(req, res, next){
 */
 
 
-router.post('/post', postMiddleware.validatePostRequest, postController.controlPostRequest);
+router.post('/post',
+function(req, res, next){
+  console.log("POST.route: "+req.body);
+  next();
+},
+postMiddleware.validatePostRequest,
+postController.controlPostRequest);
 
 
 /*
