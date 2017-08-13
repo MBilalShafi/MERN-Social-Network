@@ -73,7 +73,7 @@ router.post('/users', function(req, res, next){
 */
 
 
-router.post('/post', multer({ dest: '/www/uploads/' }).single('image'),
+router.post('/post', multer({ dest: __dirname+'/../../www/uploads/' }).single('image'),
 /*
 function(req, res, next){
   console.log(req.body);
