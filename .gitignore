@@ -2,3 +2,5 @@ node_modules/
 reqs/
 www/
 !.gitkeep
+.idea
+package-lock.json
