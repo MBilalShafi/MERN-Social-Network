@@ -27,7 +27,7 @@ Will return all users in JSON Array
 get all posts by a user (arguments: userId)
 
 /posts/tag/:tagId [GET] (not completed yet)
-get all posts by a tagId (arguments: tagId [whenever you get a TAG JSON, you will get names + IDs])
+get all posts by a tag id ( arguments: tag id (you will get id with json object) )
 
 /post [POST] (not completed yet)
 Do a new post (see post.model.js for schema)

@@ -1,14 +1,13 @@
 //Model
 var UserProfile = require('../model/user.model');
+var Post = require('../model/post.model');
 var extend = require('util')._extend;
+
 
 // Adding Users
 exports.CreateUser = function (req, res) {
     let user = new UserProfile();
-    user.username = req.body.username;
-    user.password = req.body.password;
-    user.gender = req.body.gender;
-    user.email = req.body.email;
+
     var query = UserProfile
         .find({
           $or: [{'username': req.body.username}, {'email': req.body.email}]

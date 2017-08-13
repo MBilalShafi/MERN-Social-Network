@@ -2,18 +2,21 @@
 var UserProfile = require('../model/user.model');
 var Post = require('../model/post.model');
 var extend = require('util')._extend;
+var multer  = require('multer')
+var upload = multer({ dest: '/www/uploads/' })
 
 // Adding Post
 exports.CreatePost = function (req, res) {
-    let user = new UserProfile();
-    user.username = req.body.username;
-    user.password = req.body.password;
-    user.gender = req.body.gender;
-    user.email = req.body.email;
+
+  console.log(req);
+  console.log("In Post Helper");
+    /*let user = new UserProfile();
+
     var query = UserProfile
         .find({
           $or: [{'username': req.body.username}, {'email': req.body.email}]
         }).exec();
+
     query.then(function (userFindData) {
         if (userFindData.length != 0) {
             res.json({STATUS: false, MESSAGE: "Duplicate usernames or emails not allowed."});
@@ -42,4 +45,6 @@ exports.CreatePost = function (req, res) {
                 res.json({STATUS: false, MESSAGE: "Fatal Error: "+ err});
             }
         });
+
+  */
 }
