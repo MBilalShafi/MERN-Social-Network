@@ -2,14 +2,14 @@
 var UserProfile = require('../model/user.model');
 var Post = require('../model/post.model');
 var extend = require('util')._extend;
-var multer  = require('multer')
-var upload = multer({ dest: '/www/uploads/' })
+
 
 // Adding Post
 exports.CreatePost = function (req, res) {
 
-  console.log(req);
-  console.log("In Post Helper");
+  //console.log(req);
+  //console.log("In Post Helper");
+  //res.json({STATUS: false, MESSAGE: "Speaking from post.helper.js"});
     /*let user = new UserProfile();
 
     var query = UserProfile

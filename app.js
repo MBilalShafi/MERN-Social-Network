@@ -11,14 +11,17 @@ const app=express();
 db.conn();
 
 // static files middleware (to serve static files like index.html)
-app.use(express.static('www')); // static files will be fetched from www folder
+//app.use(express.static('www')); // static files will be fetched from www folder
 
 // body Parser to parse all requests
+//app.use(multer({dest:'./uploads/'}).single());
+app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
 // routing API calls
-app.use('/api', require("./app/routes/user.route"));
 app.use('/api', require("./app/routes/post.route"));
+app.use('/api', require("./app/routes/user.route"));
+
 
 // error handling middleware
 app.use(function(err, req, res, next){

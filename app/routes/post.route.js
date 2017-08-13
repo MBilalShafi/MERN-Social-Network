@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+var multer = require('multer');
 
 const Post = require("../model/post.model");
 
@@ -72,11 +73,13 @@ router.post('/users', function(req, res, next){
 */
 
 
-router.post('/post',
+router.post('/post', multer({ dest: '/www/uploads/' }).single('image'),
+/*
 function(req, res, next){
-  console.log("POST.route: "+req.body);
+  console.log(req.body);
   next();
 },
+*/
 postMiddleware.validatePostRequest,
 postController.controlPostRequest);
 
