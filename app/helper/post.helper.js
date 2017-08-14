@@ -1,6 +1,7 @@
 //Model
 var UserProfile = require('../model/user.model');
 var Post = require('../model/post.model');
+var Tag = require('../model/tag.model');
 var fs = require('fs');
 var extend = require('util')._extend;
 
@@ -29,20 +30,75 @@ if (req.file)
 var ts=Date.now()
 req.body.createdTimestamp=ts;
 req.body.image=sendPath;
-console.log("New Path: "+newPath);
+//console.log("New Path: "+newPath);
+
+req.body.tags=new Array();
+// tags logic
+var tagArray=req.body.tagsText;
+var newArray=tagArray.split(',');
+newArray.forEach(function(element) {
+    console.log(element);
+
+    var tagCreator=Tag.findOne({"name": element}).exec();
+    tagCreator.then(function (taG) {
+      console.log("Tag: "+taG);
+        if (taG) {
+            //res.json({STATUS: false, MESSAGE: "Duplicate usernames or emails not allowed."});
+            // tag create
+            console.log("tagfound");
+            req.body.tags.push(taG._id);
+            console.log("Pushing: "+taG._id);
+            if (req.body.tags.length==newArray.length){
+              console.log("Dumping before post: "+ req.body.tags);
+              Post.create(req.body).then(function (post) {
+                  if (!post) {
+                      res.json({STATUS: false, MESSAGE: "Error Creating Post: "+ err.message});
+                  } else {
+                    var jsonObj=JSON.parse(JSON.stringify(post));
+                    var o=extend({}, jsonObj);
+                    extend(o, {"STATUS": true, "MESSAGE": "Post has been Created"});
+                    console.log(o);
+                    res.send(o);
+                  }
+              });
+            }
+            console.log("Tag Arr length: "+req.body.tags.length);
+        } else {
+          Tag.create({"name":element}).then(function(tag){
+            console.log("Tag 2: "+tag);
+            req.body.tags.push(tag._id);
+            console.log("Pushing: "+tag._id);
+            if (req.body.tags.length==newArray.length){
+              console.log("Dumping before post: "+ req.body.tags);
+              Post.create(req.body).then(function (post) {
+                  if (!post) {
+                      res.json({STATUS: false, MESSAGE: "Error Creating Post: "+ err.message});
+                  } else {
+                    var jsonObj=JSON.parse(JSON.stringify(post));
+                    var o=extend({}, jsonObj);
+                    extend(o, {"STATUS": true, "MESSAGE": "Post has been Created"});
+                    console.log(o);
+                    res.send(o);
+                  }
+              });
+            }
+          });
+          console.log("tagNotfound");
+
+        }
+      })
+
+
+      .catch(function(err){
+        console.log(err.message);
+      });
+
+});
+
+
 
 //console.log();
-Post.create(req.body).then(function (post) {
-    if (!post) {
-        res.json({STATUS: false, MESSAGE: "Error Creating Post: "+ err.message});
-    } else {
-      var jsonObj=JSON.parse(JSON.stringify(post));
-      var o=extend({}, jsonObj);
-      extend(o, {"STATUS": true, "MESSAGE": "Post has been Created"});
-      console.log(o);
-      res.send(o);
-    }
-});
+
 //res.json({STATUS: false, MESSAGE: "Wrote file to "+newPath});
   //console.log(req);
   //console.log("In Post Helper");

@@ -51,7 +51,7 @@ router.get('/posts/user/:userId', function(req, res, next){
 
 router.get('/posts/tag/:tag', function(req, res, next){
 //  console.log('get request recvd');
-  Post.find({owner: req.params.userId}).then(function(posts){
+  Post.find({owner: req.params.tag}).then(function(posts){
     res.send(posts);
   }).catch(function(err){
     console.log('promise rejected');

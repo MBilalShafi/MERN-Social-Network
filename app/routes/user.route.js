@@ -14,8 +14,7 @@ router.post('/login', function(req, res, next){
 
   User.findOne(req.body, function(err, user){
     if (err) throw err;
-    if (user)
-      user.id = user._id
+
     console.log(user);
     res.send({ user: user })
   })

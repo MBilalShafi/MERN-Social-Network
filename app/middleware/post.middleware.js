@@ -20,7 +20,7 @@ exports.validatePostRequest = function(req, res, next) {
         return res.json({ STATUS: false, MESSAGE: "Invalid Content" });
     }
 
-    if (!post.tags /*|| !user.gender.match(Exp)*/) {
+    if (!post.tagsText /*|| !user.gender.match(Exp)*/) {
         return res.json({ STATUS: false, MESSAGE: "At least one tag should present" });
     }
 

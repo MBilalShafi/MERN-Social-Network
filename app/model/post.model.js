@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
   owner: { // _id of post submittor
-    type: Number,
+    type: String,
     required: [true, "A post must have an owner"]
   },
   title: {
@@ -15,14 +15,16 @@ const PostSchema = new Schema({
     required: [true, "Content is reqd"]
   },
   image: {
-    type: String
+    type: String,
+    default: ""
   },
   comments: {
-    type: [Number]
+    type: [Number],
+    default: []
   },
   tags: {
-    type: [Number],
-    required: [true, "At least one tag is reqd"]
+    type: [String], //ids of TAGS
+    //required: [true, "At least one tag is reqd"]
   },
   createdTimestamp:{
     type: Number,

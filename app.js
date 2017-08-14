@@ -11,7 +11,7 @@ const app=express();
 db.conn();
 
 // static files middleware (to serve static files like index.html)
-//app.use(express.static('www')); // static files will be fetched from www folder
+app.use(express.static('www')); // static files will be fetched from www folder
 
 // body Parser to parse all requests
 //app.use(multer({dest:'./uploads/'}).single());
