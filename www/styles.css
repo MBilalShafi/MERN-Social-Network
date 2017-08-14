@@ -42,6 +42,13 @@ form{
 .text-center {
     text-align: center;
 }
+.statusPost {
+  border: 2px solid #763209;
+  color: #763209;
+  margin: 3em;
+  padding: 2em;
+  font-size: 28px;
+}
 .pee{
   text-align:center;
   color: red;

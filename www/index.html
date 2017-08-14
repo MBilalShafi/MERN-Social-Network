@@ -103,11 +103,30 @@
                     step: 1,
                     errorMessage: "Click on Button to Continue",
                     username:"",
-                    _id:""
+                    _id:"",
+                    posts:[]
                 });
             },
-            render: function(){
 
+            render: function(){
+              var posts="";
+              console.log(this.state.posts);
+              if(this.state.posts.length!=0){
+                posts = this.state.posts;
+                //this.deleteValue=this.deleteValue.bind(this);
+                posts = posts.map(function(post, index){
+                    return(
+                      <div className="statusPost">
+                        <b>Author: </b>{this.state.username}<br/><br/>
+                        <b>Title:</b> {post.title}<br/>
+                        <b>Content:</b> {post.content}<br/>
+                      </div>
+
+                    );
+                }, this);
+              } else {
+                posts="No Posts Yet";
+              }
 
               switch (this.state.step) {
                 case 1: // login
@@ -198,6 +217,9 @@
                         </p>
                     </form>
                     <hr />
+                    <h1>All posts by {this.state.username}</h1>
+                    <hr />
+                    {posts}
                     </div>
 
                   );
@@ -233,6 +255,37 @@
                 })
 
             },
+            getAllPosts: function(){
+
+                // console.log(e);
+
+                fetch('/api/posts/user/'+this.state._id)
+                .then(function(data){
+
+                    return data.json();
+
+
+                }).then(json => {
+
+                      this.setState({
+                        //users: this.state.users.concat(json),
+                        errorMessage: "Fetched Posts",
+                        posts: json
+
+                        //errorMessage: ""
+
+                      });
+
+
+                      //var jsArr=[];
+                      //jsArr=json;
+                      //console.log(jsArr.status);
+                      console.log(json);
+                    //handleSubmit();
+                });
+
+
+            },
             handleLogin: function(e){
               //var users = this.state.users;
 
@@ -263,6 +316,7 @@
                   console.log(json.STATUS);
                   if(json.user){
                     console.log(json);
+
                       this.setState({
                         //users: this.state.users.concat(json),
                         errorMessage: "Logged In",
@@ -272,6 +326,7 @@
                         //errorMessage: ""
 
                       });
+                      this.getAllPosts();
                   }
                   else {
                     this.setState({
@@ -324,7 +379,8 @@
 
                 }).then(json => {
                   console.log(json.STATUS);
-                  //if(json.STATUS){ // done
+                  if(json.STATUS) // done
+                    this.getAllPosts();
                     console.log(json);
                       this.setState({
                         //users: this.state.users.concat(json),
