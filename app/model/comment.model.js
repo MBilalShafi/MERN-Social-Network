@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const CommentSchema = new Schema({
   author: {
-    type: Number,
+    type: String,
     required: [true, "A comment must have an author."]
   },
   body: {
@@ -12,6 +12,7 @@ const CommentSchema = new Schema({
   },
   thanks: {
     type: [Number]
+    // a list of user IDs who say thanks
   }
 });
 

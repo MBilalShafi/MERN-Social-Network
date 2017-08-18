@@ -37,19 +37,20 @@ req.body.tags=new Array();
 var tagArray=req.body.tagsText;
 var newArray=tagArray.split(',');
 newArray.forEach(function(element) {
+  element = element.replace(/\s+/g, ''); // remove white spaces
     console.log(element);
 
     var tagCreator=Tag.findOne({"name": element}).exec();
     tagCreator.then(function (taG) {
-      console.log("Tag: "+taG);
+      //console.log("Tag: "+taG);
         if (taG) {
             //res.json({STATUS: false, MESSAGE: "Duplicate usernames or emails not allowed."});
             // tag create
-            console.log("tagfound");
+            //console.log("tagfound");
             req.body.tags.push(taG._id);
-            console.log("Pushing: "+taG._id);
+            //console.log("Pushing: "+taG._id);
             if (req.body.tags.length==newArray.length){
-              console.log("Dumping before post: "+ req.body.tags);
+              //console.log("Dumping before post: "+ req.body.tags);
               Post.create(req.body).then(function (post) {
                   if (!post) {
                       res.json({STATUS: false, MESSAGE: "Error Creating Post: "+ err.message});

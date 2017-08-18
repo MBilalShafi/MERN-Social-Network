@@ -3,12 +3,16 @@ const router = express.Router();
 var multer = require('multer');
 
 const Post = require("../model/post.model");
+const Tag = require("../model/tag.model");
 
 //Middleware
 var postMiddleware = require('../middleware/post.middleware');
 
 //Controller
 var postController = require('../controller/post.controller');
+
+// Helper
+var commentHelper = require('../helper/comment.helper');
 
 // get by username nd password
 /*
@@ -37,7 +41,22 @@ router.get('/post', function(req, res, next){
 router.get('/posts/user/:userId', function(req, res, next){
 //  console.log('get request recvd');
   Post.find({owner: req.params.userId}).then(function(posts){
+
     res.send(posts);
+  }).catch(function(err){
+    console.log('promise rejected');
+    res.status(422).send(err);
+  });
+});
+
+router.get('/post/:postId', function(req, res, next){
+//  console.log('get request recvd');
+  Post.findOne({_id: req.params.postId}).then(function(post){
+    var comments=commentHelper.GetCommentsForAPost(req,res);
+    console.log("Comments: "+ comments);
+    post.comments=comments;
+
+    res.send(post);
   }).catch(function(err){
     console.log('promise rejected');
     res.status(422).send(err);
@@ -49,14 +68,20 @@ router.get('/posts/user/:userId', function(req, res, next){
 // get all posts by tag
 /*    TODO     */
 
-router.get('/posts/tag/:tag', function(req, res, next){
+router.get('/posts/tag/:tagName', function(req, res, next){
 //  console.log('get request recvd');
-  Post.find({owner: req.params.tag}).then(function(posts){
+Tag.findOne({name: req.params.tagName}).then(function(tag){
+  Post.find({tags: tag._id}).then(function(posts){
     res.send(posts);
   }).catch(function(err){
     console.log('promise rejected');
     res.status(422).send(err);
   });
+}).catch(function(err){
+  console.log('promise rejected');
+  res.status(422).send(err);
+});
+
 });
 
 /*

@@ -21,6 +21,8 @@ app.use(bodyParser.json());
 // routing API calls
 app.use('/api', require("./app/routes/post.route"));
 app.use('/api', require("./app/routes/user.route"));
+app.use('/api', require("./app/routes/tag.route"));
+app.use('/api', require("./app/routes/comment.route"));
 
 
 // error handling middleware

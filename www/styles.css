@@ -93,7 +93,7 @@ html body .mybtn {
 
 }
 .hashtag::before{
-  content: "#"
+  content: '#';
 }
 #searcher {
   font-size: 26px;
