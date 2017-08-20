@@ -16,8 +16,14 @@ var Timeline = React.createClass({
     componentWillUpdate: function(){
       console.log("Timeline: I got updated: "+this.context.postType);
       this.getAllPosts();
+
       // this.callRefreshTags();
 
+    },
+
+    componentDidMount: function(){
+      console.log("Timeline: I got updated: "+this.context.postType);
+      this.getAllPosts();
     },
 
     callRefreshTags: function(){
@@ -26,18 +32,13 @@ var Timeline = React.createClass({
 
     render: function(){
       var posts="";
-      console.log(this.state.posts);
+      //console.log(this.state.posts);
       if(this.state.posts.length!=0){
         posts = this.state.posts;
         //this.deleteValue=this.deleteValue.bind(this);
         posts = posts.map(function(post, index){
             return(
-              <div className="statusPost">
-                <b>Author: </b>{this.state.username}<br/><br/>
-                <b>Title:</b> {post.title}<br/>
-                <b>Content:</b> {post.content}<br/>
-              </div>
-
+              <Post id={post._id} user={this.state.username} />
             );
         }, this);
       } else {
@@ -49,8 +50,6 @@ var Timeline = React.createClass({
         return(
 
             <div id="user-container">
-
-
 
               <h1>Login to System:</h1>
               <hr />
@@ -173,7 +172,7 @@ var Timeline = React.createClass({
     },
     getAllPosts: function(){
 
-        // console.log(e);
+         //console.log("getting all posts");
         if (this.context.postType=='user'){
           fetch('/api/posts/user/'+this.state._id)
           .then(function(data){
@@ -208,7 +207,7 @@ var Timeline = React.createClass({
                 // fetched posts, now fetching comments one by one for each post
 
                 // to improve performance collect all posts IDs in an array
-                var arr=json.map(function(elem){
+                /*var arr=json.map(function(elem){
                   return elem._id;
                 });
 
@@ -219,11 +218,12 @@ var Timeline = React.createClass({
 
 
                 });
+                */
           });
         }
 
     },
-    
+
     handleLogin: function(e){
       //var users = this.state.users;
 
@@ -234,7 +234,7 @@ var Timeline = React.createClass({
         //var _name = document.getElementById('name01').value;
         //alert(_name);
         var _pwd = this.refs.loginPwd.value;
-        console.log("Picking data: "+_username+_pwd);
+        //console.log("Picking data: "+_username+_pwd);
         fetch('/api/login', {
           method: 'POST',
           headers: {
@@ -253,15 +253,13 @@ var Timeline = React.createClass({
         }).then(json => {
           console.log(json.STATUS);
           if(json.user){
-            console.log(json);
 
               this.setState({
-                //users: this.state.users.concat(json),
+
                 errorMessage: "Logged In",
                 username: json.user.username,
                 _id: json.user._id,
                 step: 3
-                //errorMessage: ""
 
               });
               this.getAllPosts();
@@ -272,32 +270,18 @@ var Timeline = React.createClass({
 
             });
           }
-
-              //var jsArr=[];
-              //jsArr=json;
-              //console.log(jsArr.status);
-              console.log(json);
-            //handleSubmit();
         });
 
 
     },
     handlePost: function(e){
-      //var users = this.state.users;
-
-        //console.log("The vaalue : "+ this.refs.name.value);
         e.preventDefault();
-        // console.log(e);
         var _title = this.refs.title.value;
-        //var _name = document.getElementById('name01').value;
-        //alert(_name);
         var _content = this.refs.content.value;
 
         var _tags = this.refs.tags.value;
-        //_tags.split(',');
         var _owner = this.state._id;
 
-        //console.log("Picking data: "+_username+_pwd);
         fetch('/api/post', {
           method: 'POST',
           headers: {
@@ -322,7 +306,6 @@ var Timeline = React.createClass({
             this.callRefreshTags();
             console.log(json);
               this.setState({
-                //users: this.state.users.concat(json),
                 errorMessage: json.MESSAGE
               });
 
@@ -365,11 +348,8 @@ var Timeline = React.createClass({
                 //errorMessage: ""
 
               });
-
               console.log(json);
         });
-
-
     }
 
 });

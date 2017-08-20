@@ -19,7 +19,7 @@ const PostSchema = new Schema({
     default: ""
   },
   comments: {
-    type: [Number],
+    type: [String],
     default: []
   },
   tags: {

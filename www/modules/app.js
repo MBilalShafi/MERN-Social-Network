@@ -17,7 +17,6 @@ var App = React.createClass({
   },
   setTagRefresh: function(){
     console.log("Speaking from setTagRefresh");
-    this.state.variable1++;
     this.getChildContext();
     this.getTags();
   },
@@ -54,8 +53,8 @@ var App = React.createClass({
       //this.deleteValue=this.deleteValue.bind(this);
       tags = tags.map(function(tag, index){
           return(
-            <div className="hashTag">
-              <a onClick={() => this.setPostType(tag.name)}>#{tag.name}</a>
+            <div className="hashtag">
+              <a onClick={() => this.setPostType(tag.name)}>{tag.name}</a>
             </div>
 
           );

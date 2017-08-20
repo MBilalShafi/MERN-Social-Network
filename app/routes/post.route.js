@@ -13,6 +13,8 @@ var postController = require('../controller/post.controller');
 
 // Helper
 var commentHelper = require('../helper/comment.helper');
+var userHelper = require('../helper/user.helper');
+var tagHelper = require('../helper/tag.helper');
 
 // get by username nd password
 /*
@@ -40,25 +42,60 @@ router.get('/post', function(req, res, next){
 
 router.get('/posts/user/:userId', function(req, res, next){
 //  console.log('get request recvd');
+Post.find({owner: req.params.userId}).sort('-createdTimestamp').exec(function(err, posts) {
+  if (!err){
+    res.send(posts);
+  } else {
+    console.log('/posts/user/:userId promise rejected');
+    res.status(422).send(err);
+  }
+});
+/*
   Post.find({owner: req.params.userId}).then(function(posts){
 
-    res.send(posts);
+
   }).catch(function(err){
-    console.log('promise rejected');
+    console.log('/posts/user/:userId promise rejected');
     res.status(422).send(err);
   });
+*/
 });
 
 router.get('/post/:postId', function(req, res, next){
 //  console.log('get request recvd');
   Post.findOne({_id: req.params.postId}).then(function(post){
+    post.ownername="";
     var comments=commentHelper.GetCommentsForAPost(req,res);
-    console.log("Comments: "+ comments);
-    post.comments=comments;
+    //console.log("Post.route: Comments: "+ comments);
+    if (comments)
+      post.comments=comments;
+    else
+      post.comments=[];
+    userHelper.findUserById(post.owner).then(function(userA){
+      //console.log("User: "+userA);
+      if(userA){
+        post.owner=userA.username;
+      }
+      tagHelper.FindTags(post.tags).then(function(tagS){
+        if(tagS){
+          tagS=tagS.map(function(element){
+            return element.name;
+          });
+          post.tags=tagS;
+        } else
+          post.tags=[];
 
-    res.send(post);
+        console.log("Post.route: Post: "+ post);
+        res.send(post);
+      });
+
+    });
+
+
+
+
   }).catch(function(err){
-    console.log('promise rejected');
+    console.log('/post/:postId promise rejected '+ err);
     res.status(422).send(err);
   });
 });
@@ -74,7 +111,7 @@ Tag.findOne({name: req.params.tagName}).then(function(tag){
   Post.find({tags: tag._id}).then(function(posts){
     res.send(posts);
   }).catch(function(err){
-    console.log('promise rejected');
+    console.log('/posts/tag/:tagName promise rejected');
     res.status(422).send(err);
   });
 }).catch(function(err){

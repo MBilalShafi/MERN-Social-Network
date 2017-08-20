@@ -10,8 +10,12 @@ const CommentSchema = new Schema({
     type: String,
     required: [true, "A comment must have a body."]
   },
+  createdTimestamp:{
+    type: Number,
+    required: [true, "A comment must be published on some time"]
+  },
   thanks: {
-    type: [Number]
+    type: [String]
     // a list of user IDs who say thanks
   }
 });

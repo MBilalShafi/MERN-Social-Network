@@ -1,0 +1,41 @@
+/*-- Global Selectors --*/
+.postFBStyle a{
+    color:#47649F;
+}
+
+body .postFBStyle{
+    font-family:'helvetica';    
+}
+
+/*-- Bootstrap Override Style --*/
+
+
+/*-- Content Style --*/
+.postFBStyle .post-footer-option li{
+    float:left;
+    margin-right:50px;
+    padding-bottom:15px;
+}
+
+.postFBStyle .post-footer-option li a{
+    color:#AFB4BD;
+    font-weight:500;
+    font-size:1.3rem;
+}
+
+.postFBStyle .photo-profile{
+    border:1px solid #DDD;    
+}
+
+.postFBStyle .anchor-username h4{
+    font-weight:bold;    
+}
+
+.postFBStyle .anchor-time{
+    color:#ADB2BB;
+    font-size:1.2rem;
+}
+
+.postFBStyle .post-footer-comment-wrapper{
+    background-color:#F6F7F8;
+}
