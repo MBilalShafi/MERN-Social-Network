@@ -6,9 +6,11 @@
 body .postFBStyle{
     font-family:'helvetica';
 }
-
+.comment {
+  margin-bottom: 20px;
+}
 .comment-form input[type="text"]{
-  
+
   display: inline-block;
   font-family: Helvetica;
   font-size: 11px;

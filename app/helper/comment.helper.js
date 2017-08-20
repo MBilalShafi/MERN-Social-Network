@@ -5,6 +5,11 @@ var Comment = require('../model/comment.model');
 var extend = require('util')._extend;
 
 // Getting Comments
+exports.GetComments =
+function(commentArr){
+  return Comment.find({_id: commentArr}).sort('-createdTimestamp');
+}
+
 exports.GetCommentsForAPost =
 function(req, res){
   var commentsArr=[];

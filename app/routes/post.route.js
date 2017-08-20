@@ -61,35 +61,49 @@ Post.find({owner: req.params.userId}).sort('-createdTimestamp').exec(function(er
 */
 });
 
-router.get('/post/:postId', function(req, res, next){
+router.get('/post/:postId', function(req, res){
 //  console.log('get request recvd');
   Post.findOne({_id: req.params.postId}).then(function(post){
-    post.ownername="";
-    var comments=commentHelper.GetCommentsForAPost(req,res);
-    //console.log("Post.route: Comments: "+ comments);
-    if (comments)
-      post.comments=comments;
-    else
-      post.comments=[];
-    userHelper.findUserById(post.owner).then(function(userA){
-      //console.log("User: "+userA);
-      if(userA){
-        post.owner=userA.username;
-      }
-      tagHelper.FindTags(post.tags).then(function(tagS){
-        if(tagS){
-          tagS=tagS.map(function(element){
-            return element.name;
-          });
-          post.tags=tagS;
-        } else
-          post.tags=[];
+    //post.ownername="";
+    console.log("comments: "+post.comments.length)
 
-        console.log("Post.route: Post: "+ post);
-        res.send({post:post, user:userA});
+      userHelper.findUserById(post.owner).then(function(userA){
+        //console.log("User: "+userA);
+        if(userA){
+          post.owner=userA.username;
+        }
+        tagHelper.FindTags(post.tags).then(function(tagS){
+          if(tagS){
+            tagS=tagS.map(function(element){
+              return element.name;
+            });
+            post.tags=tagS;
+          } else{
+            post.tags=[];
+          }
+            console.log("comments: "+post.comments.length)
+            commentHelper.GetComments(post.comments).then(function(comments){
+
+              if (comments){
+                post.comments=comments;
+                console.log(comments);
+              }
+              else{
+                post.comments=[];
+              }
+
+              res.send({post:post, user:userA, comments: comments});
+              }).catch(function(err){
+                console.log('comments search promise rejected');
+                res.status(422).send(err);
+              });
+          //console.log("Post.route: Post: "+ post);
+        });
+
       });
 
-    });
+
+    //console.log("Post.route: Comments: "+ comments);
 
 
 

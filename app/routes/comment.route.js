@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 var multer = require('multer');
 
+var extend = require('util')._extend;
+
 const Post = require("../model/post.model");
 const Comment = require("../model/comment.model");
 
@@ -54,7 +56,7 @@ router.post('/comment/', function(req, res, next){
 
   Comment.create(req.body).then(function(comment){
     if(!comment){
-      res.json({STATUS: false, MESSAGE: "Error Creating Comment "});
+      res.json({"STATUS": false, "MESSAGE": "Error Creating Comment "});
     } else {
 
       var jsonObj=JSON.parse(JSON.stringify(comment));
@@ -67,8 +69,8 @@ router.post('/comment/', function(req, res, next){
         console.log(o);
         res.send(o);
       }).catch(function(err){
-        console.log('comment b promise rejected');
-        res.status(422).send(err);
+        console.log('comment b promise rejected, error message:'+err);
+        res.status(422).send({"STATUS": false, "MESSAGE": err});
       });
 
     }

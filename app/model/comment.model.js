@@ -15,7 +15,8 @@ const CommentSchema = new Schema({
     required: [true, "A comment must be published on some time"]
   },
   thanks: {
-    type: [String]
+    type: [String],
+    default: []
     // a list of user IDs who say thanks
   }
 });

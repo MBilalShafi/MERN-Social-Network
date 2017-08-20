@@ -4,7 +4,9 @@ var Post = React.createClass({
       return({
           // define variables here
           post:[],
-          user:[]
+          user:[],
+          comments:[],
+          errorMessage:""
 
       });
   },
@@ -47,7 +49,28 @@ var Post = React.createClass({
     e.preventDefault();
     var comment = this.refs.commentText.value;
     if (comment){
-      console.log("Comment Adding");
+      fetch('/api/comment/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          author: this.state.user.username,
+          body: comment,
+          postID: this.state.post._id,
+          createdTimestamp: Date.now()
+        })
+      })
+      .then(function(data){
+          return data.json();
+      }).then(json => {
+        console.log(json);
+        if(json.STATUS)
+          this.fetchPost();
+        this.setState({
+          errorMessage: json.MESSAGE
+        });
+      });
     }
   },
   fetchPost: function(){
@@ -59,7 +82,8 @@ var Post = React.createClass({
         //console.log("Post: "+json);
         this.setState({
           post: json.post,
-          user: json.user
+          user: json.user,
+          comments: json.comments
         });
     });
   },
@@ -84,9 +108,9 @@ var Post = React.createClass({
                    </a>
                  </div>
                  <div className="media-body">
-                   <a href="#" className="anchor-username"><h4 className="media-heading">{element.author.name}</h4></a>
+                   <a href="#" className="anchor-username"><h4 className="media-heading">{element.author}</h4></a>
 
-                   <a href="#" className="anchor-time">{timeAgo}</a>
+                   <a href="#" className="anchor-time">{this.timeInAgo(element.createdTimestamp)}</a>
                    <br/>
                    {element.body}
                  </div>
@@ -94,7 +118,7 @@ var Post = React.createClass({
           </div>
 
         );
-      });
+      }, this);
     } else {
       comments="No Comments on Post";
     }
@@ -167,10 +191,10 @@ var Post = React.createClass({
                            <div className="post-footer-comment-wrapper">
                                <div className="comment-form">
                                <form className="commentAdderForm" onSubmit={this.postComment}>
-                                  {this.state.user.username}:&nbsp; 
+                                  {this.state.user.username}:&nbsp;
                                    <input type="text" ref="commentText" placeholder="write a comment..."  />
                                    <input type="submit" value="Comment" className="hidden" />
-
+                                   <p className="pee">{this.state.errorMessage}</p>
                                </form>
                                </div>
                                {comments}

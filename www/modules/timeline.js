@@ -46,7 +46,7 @@ var Timeline = React.createClass({
       }
 
       switch (this.state.step) {
-        case 1: // login
+        case 1: // login <Post id="123" user="abc" />
         return(
 
             <div id="user-container">
