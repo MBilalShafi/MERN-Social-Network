@@ -15,7 +15,6 @@ var commentController = require('../controller/comment.controller');
 // get comments against a post
 router.get('/comments/:postId', commentMiddleware.validateCommentGet, commentController.controlMessageGet);
 
-
 // get comments against an array of posts
 router.post('/comments/', function(req, res, next){
 

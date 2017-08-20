@@ -3,7 +3,8 @@ var Post = React.createClass({
     // get all tags
       return({
           // define variables here
-          post:[]
+          post:[],
+          user:[]
 
       });
   },
@@ -42,6 +43,13 @@ var Post = React.createClass({
            return 'approximately ' + Math.round(elapsed/msPerYear ) + ' years ago';
       }
   },
+  postComment: function(e){
+    e.preventDefault();
+    var comment = this.refs.commentText.value;
+    if (comment){
+      console.log("Comment Adding");
+    }
+  },
   fetchPost: function(){
     // load data using RESTful call
     fetch('/api/post/'+this.props.id)
@@ -50,7 +58,8 @@ var Post = React.createClass({
     }).then(json => {
         //console.log("Post: "+json);
         this.setState({
-          post: json
+          post: json.post,
+          user: json.user
         });
     });
   },
@@ -134,7 +143,7 @@ var Post = React.createClass({
                                         </a>
                                       </div>
                                       <div className="media-body">
-                                        <a href="#" className="anchor-username"><h4 className="media-heading">{this.state.post.owner}</h4></a>
+                                        <a href="#" className="anchor-username"><h4 className="media-heading">{this.state.user.username}</h4></a>
                                         <a href="#" className="anchor-time">{timeAgo}</a>
                                       </div>
                                     </div>
@@ -157,7 +166,12 @@ var Post = React.createClass({
                            </div>
                            <div className="post-footer-comment-wrapper">
                                <div className="comment-form">
+                               <form className="commentAdderForm" onSubmit={this.postComment}>
+                                  {this.state.user.username}:&nbsp; 
+                                   <input type="text" ref="commentText" placeholder="write a comment..."  />
+                                   <input type="submit" value="Comment" className="hidden" />
 
+                               </form>
                                </div>
                                {comments}
                            </div>

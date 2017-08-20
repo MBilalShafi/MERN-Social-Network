@@ -86,7 +86,7 @@ router.get('/post/:postId', function(req, res, next){
           post.tags=[];
 
         console.log("Post.route: Post: "+ post);
-        res.send(post);
+        res.send({post:post, user:userA});
       });
 
     });

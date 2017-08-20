@@ -4,9 +4,24 @@
 }
 
 body .postFBStyle{
-    font-family:'helvetica';    
+    font-family:'helvetica';
 }
 
+.comment-form input[type="text"]{
+  
+  display: inline-block;
+  font-family: Helvetica;
+  font-size: 11px;
+  color: green;
+  height: 25px;
+  line-height: 20px;
+}
+.post-body {
+  padding: 30px 0 0 30px;
+}
+.hidden {
+  display:none;
+}
 /*-- Bootstrap Override Style --*/
 
 
@@ -24,11 +39,11 @@ body .postFBStyle{
 }
 
 .postFBStyle .photo-profile{
-    border:1px solid #DDD;    
+    border:1px solid #DDD;
 }
 
 .postFBStyle .anchor-username h4{
-    font-weight:bold;    
+    font-weight:bold;
 }
 
 .postFBStyle .anchor-time{
