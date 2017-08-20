@@ -112,19 +112,16 @@ var Timeline = React.createClass({
             <h2>Add New Post:</h2>
             <hr />
             <form enctype="multipart/form-data" id="addpost" onSubmit={this.handlePost}>
-                <label>Title:</label>
-                <input type="text" ref="title" placeholder="title"  />
-                <label>Content:</label>
+
+
+                <input type="text" ref="title" placeholder="post title..."  />
 
                 <textarea className="taOne" ref="content">
-
+                content...
                 </textarea>
 
-
-                <br/>
-                <label>Tags:</label>
                 <input type="text" ref="tags" placeholder="tags (separated by comma)"  />
-
+              
 
                 <input type="submit" value="POST NEW STATUS" />
                 <p className="pee" align="center">

@@ -109,10 +109,10 @@ var Post = React.createClass({
                  </div>
                  <div className="media-body">
                    <a href="#" className="anchor-username"><h4 className="media-heading">{element.author}</h4></a>
+                   &nbsp; {element.body}<br/>
 
                    <a href="#" className="anchor-time">{this.timeInAgo(element.createdTimestamp)}</a>
-                   <br/>
-                   {element.body}
+
                  </div>
                </div>
           </div>
@@ -167,7 +167,9 @@ var Post = React.createClass({
                                         </a>
                                       </div>
                                       <div className="media-body">
-                                        <a href="#" className="anchor-username"><h4 className="media-heading">{this.state.user.username}</h4></a>
+                                        <a href="#" className="anchor-username"><h4 className="media-heading">{this.state.user.username}</h4></a><br/>
+                                          {tags}
+                                        <br/>
                                         <a href="#" className="anchor-time">{timeAgo}</a>
                                       </div>
                                     </div>
@@ -191,7 +193,7 @@ var Post = React.createClass({
                            <div className="post-footer-comment-wrapper">
                                <div className="comment-form">
                                <form className="commentAdderForm" onSubmit={this.postComment}>
-                                  {this.state.user.username}:&nbsp;
+                                  {this.props.user}:&nbsp;
                                    <input type="text" ref="commentText" placeholder="write a comment..."  />
                                    <input type="submit" value="Comment" className="hidden" />
                                    <p className="pee">{this.state.errorMessage}</p>

@@ -9,6 +9,7 @@ body .postFBStyle{
 .comment {
   margin-bottom: 20px;
 }
+
 .comment-form input[type="text"]{
 
   display: inline-block;
@@ -46,6 +47,8 @@ body .postFBStyle{
 
 .postFBStyle .anchor-username h4{
     font-weight:bold;
+    display: inline-block;
+    
 }
 
 .postFBStyle .anchor-time{
