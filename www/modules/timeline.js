@@ -38,11 +38,19 @@ var Timeline = React.createClass({
         //this.deleteValue=this.deleteValue.bind(this);
         posts = posts.map(function(post, index){
             return(
-              <Post id={post._id} user={this.state.username} />
+              <Post id={post._id} user={this.state.username} sessionUserId={this.state._id} />
             );
         }, this);
       } else {
         posts="No Posts Yet";
+      }
+      var follow= ["junk"];
+      if(this.context.postType!='user'){
+        follow=follow.map(function(raw, index){
+          return(
+            <button value="Follow" onClick="" />
+          );
+        });
       }
 
       switch (this.state.step) {
@@ -103,6 +111,9 @@ var Timeline = React.createClass({
             );
             //<label>Image:</label>
             //<input type="file" ref="file" placeholder="select an image file"  />
+
+
+
         case 3: // logged in
           return (
 
@@ -121,7 +132,7 @@ var Timeline = React.createClass({
                 </textarea>
 
                 <input type="text" ref="tags" placeholder="tags (separated by comma)"  />
-              
+
 
                 <input type="submit" value="POST NEW STATUS" />
                 <p className="pee" align="center">

@@ -48,12 +48,26 @@ body .postFBStyle{
 .postFBStyle .anchor-username h4{
     font-weight:bold;
     display: inline-block;
-    
+
 }
 
 .postFBStyle .anchor-time{
     color:#ADB2BB;
     font-size:1.2rem;
+}
+
+.thanks{
+  float:right;
+  font-size: 10px;
+  text-align: center;
+}
+
+.thanksButton {
+  padding: 4px;
+  border: 2px #4764AA solid;
+  color: #4764AA;
+  border-radius: 2px;
+  margin-bottom: 3px;
 }
 
 .postFBStyle .post-footer-comment-wrapper{

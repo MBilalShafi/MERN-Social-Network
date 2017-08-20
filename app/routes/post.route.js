@@ -81,7 +81,7 @@ router.get('/post/:postId', function(req, res){
           } else{
             post.tags=[];
           }
-            console.log("comments: "+post.comments.length)
+            //console.log("comments: "+post.comments.length)
             commentHelper.GetComments(post.comments).then(function(comments){
 
               if (comments){

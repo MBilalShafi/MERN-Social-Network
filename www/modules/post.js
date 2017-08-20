@@ -83,7 +83,7 @@ var Post = React.createClass({
         this.setState({
           post: json.post,
           user: json.user,
-          comments: json.comments
+          comments: json.comments,
         });
     });
   },
@@ -92,6 +92,30 @@ var Post = React.createClass({
   },
   componentDidMount: function(){
     this.fetchPost();
+  },
+
+  toggleThanks: function(commID){
+    //alert("Toggle Thanks fired, UserId:"+ this.props.sessionUserId);
+    fetch('/api/comment/thanks', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        commentId: commID,
+        userId: this.props.sessionUserId
+      })
+    })
+    .then(function(data){
+        return data.json();
+    }).then(json => {
+      console.log(json);
+
+      this.fetchPost();
+      this.setState({
+        errorMessage:"Request was Successful"
+      });
+    });
   },
 
   render: function(){
@@ -108,6 +132,9 @@ var Post = React.createClass({
                    </a>
                  </div>
                  <div className="media-body">
+                  <p className="thanks">
+                    <a onClick={() => this.toggleThanks(element._id)}><span className="thanksButton">Say Thanks</span></a><br />[{element.thanks.length} thanks]
+                  </p>
                    <a href="#" className="anchor-username"><h4 className="media-heading">{element.author}</h4></a>
                    &nbsp; {element.body}<br/>
 
@@ -184,12 +211,6 @@ var Post = React.createClass({
                        </section>
                        <section className="post-footer">
                            <hr />
-                           <div className="post-footer-option container">
-                                <ul className="list-unstyled">
-                                    <li><a href="#"><i className="glyphicon glyphicon-thumbs-up"></i> Say Thanks</a></li>
-                                    <li><a href="#"><i className="glyphicon glyphicon-comment"></i> Comment</a></li>
-                                </ul>
-                           </div>
                            <div className="post-footer-comment-wrapper">
                                <div className="comment-form">
                                <form className="commentAdderForm" onSubmit={this.postComment}>
@@ -200,6 +221,7 @@ var Post = React.createClass({
                                </form>
                                </div>
                                {comments}
+
                            </div>
                        </section>
                     </div>

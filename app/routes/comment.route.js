@@ -29,18 +29,29 @@ router.post('/comments/', function(req, res, next){
 });
 
 //toggle thanks of a user on a comment
-router.post('/comment/thanks', function(req, res, next){
+router.post('/comment/thanks', function(req, res){
 //  console.log('get request recvd');
   var commID=req.body.commentId;
-  var userId=req.body.userId;
+  var userID=req.body.userId;
+  console.log(commID+", "+userID)
   Comment.findOne({_id: commID, thanks: userID}).then(function(comment){
+    console.log(comment);
     if (comment){
       // already said thanks, remove thanks
-      Comment.findByIdAndUpdate({_id: commID}, { $pull : { thanks: userID } } );
+      Comment.findByIdAndUpdate({_id: commID}, { $pull : { thanks: userID } } )
+      .then(function(response){
+        res.send({"STATUS": true});
+      });
     } else {
+
       // add thanks
-      Comment.findByIdAndUpdate({_id: commID}, { $push : { thanks: userID } } );
+      Comment.findByIdAndUpdate({_id: commID}, { $push : { thanks: userID } } )
+      .then(function(response){
+        res.send({"STATUS": true});
+      });
+      //res.send({"STATUS": true});
     }
+
 
   }).catch(function(err){
     console.log('post search promise rejected');
